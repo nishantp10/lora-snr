@@ -1,0 +1,24 @@
+    std::vector<float> 
+    demod_impl::determine_snr(gr_complex *fft_result)
+    {	   std::vector<float> snr;	
+ 	   if(d_fft_size >= 2){	   
+	   	float max = pow(real(fft_result[0]),2) + pow(imag(fft_result[0]),2);
+	
+	
+    		for(unsigned short i = 0; i<d_fft_size; i++)
+		{			
+			float pwr_signal = pow(real(fft_result[i]),2) + pow(imag(fft_result[i]),2);
+			float snr_value = 10*log10(pwr_signal/max);
+			snr.push_back(snr_value);
+		
+			if(pwr_signal > max)
+			{
+		  	   max = pwr_signal;
+			}	
+	        
+		}
+     }
+    	return snr;
+    
+    
+    }
